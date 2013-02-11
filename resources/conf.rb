@@ -9,6 +9,7 @@ attribute :name, :name_attribute => true, :kind_of => String
 attribute :path, :kind_of => String
 attribute :pid, :kind_of => String
 attribute :reload, :default => :delayed
+attribute :alert, :kind_of => String
 attribute :rule, :kind_of => [String, Array] #TODO: regex check for if then
 attribute :start, :kind_of => String
 attribute :start_as, :kind_of => String
