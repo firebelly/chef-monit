@@ -22,10 +22,16 @@ service "monit" do
   supports [:start, :restart, :stop]
 end
 
+directory "/etc/monit" do
+  owner 'root'
+  group 'root'
+  mode '0775'
+end
+
 template "/etc/monit/monitrc" do
   owner "root"
   group "root"
-  mode 0700
+  mode '0700'
   source 'monitrc.erb'
   notifies :restart, resources(:service => "monit"), :delayed
 end
