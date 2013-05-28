@@ -25,7 +25,7 @@ action :create do
       :stop_as => new_resource.stop_as,
       :type => new_resource.type
     )
-    notifies :restart, resources(:service => "monit"), new_resource.reload
+    notifies :restart, "service[monit]", new_resource.reload
   end
 end
 
@@ -34,6 +34,6 @@ action :delete do
     action :delete
     source new_resource.template
     cookbook new_resource.cookbook
-    notifies :restart, resources(:service => "monit"), new_resource.reload
+    notifies :restart, "service[monit]", new_resource.reload
   end
 end

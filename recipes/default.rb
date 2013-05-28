@@ -14,12 +14,24 @@ when "debian"
     action :create
     ignore_failure true
   end
+when 'rhel'
+  template '/etc/init.d/monit' do
+    source 'initd.erb'
+    mode '0744'
+    variables :config_file => '/etc/monit/monitrc'
+    notifies :restart, "service[monit]", :delayed
+  end
+
+  file '/etc/monit.conf' do
+    action :delete
+  end
 end
+
 
 service "monit" do
   action [:enable, :start]
   enabled true
-  supports [:start, :restart, :stop]
+  supports [:start, :restart, :stop, :status]
 end
 
 directory "/etc/monit" do
@@ -33,7 +45,7 @@ template "/etc/monit/monitrc" do
   group "root"
   mode '0700'
   source 'monitrc.erb'
-  notifies :restart, resources(:service => "monit"), :delayed
+  notifies :restart, "service[monit]", :delayed
 end
 
 directory "/etc/monit/conf.d/" do
