@@ -27,13 +27,6 @@ when 'rhel'
   end
 end
 
-
-service "monit" do
-  action [:enable, :start]
-  enabled true
-  supports [:start, :restart, :stop, :status]
-end
-
 directory "/etc/monit" do
   owner 'root'
   group 'root'
@@ -46,6 +39,12 @@ template "/etc/monit/monitrc" do
   mode '0700'
   source 'monitrc.erb'
   notifies :restart, "service[monit]", :delayed
+end
+
+service "monit" do
+  action [:enable, :start]
+  enabled true
+  supports [:start, :restart, :stop, :status]
 end
 
 directory "/etc/monit/conf.d/" do
