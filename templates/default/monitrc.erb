@@ -3,7 +3,12 @@ set daemon <%= @node[:monit][:poll_period] %>
   with start delay <%= @node[:monit][:poll_start_delay] %>
 <% end %>
 
+<% if @node[:monit][:log_file].nil? %>
 set logfile syslog facility log_daemon
+<% else %>
+set logfile <%= @node[:monit][:log_file] %>
+<% end %>
+
 
 set mailserver <%= @node[:monit][:mailserver][:host] %><%= " port #{@node[:monit][:mailserver][:port]}" if @node[:monit][:mailserver][:port] %>
 <% if @node[:monit][:mailserver][:username] %>

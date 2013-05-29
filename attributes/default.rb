@@ -29,3 +29,5 @@ default[:monit][:cert] = "/etc/monit/monit.pem"
 default[:monit][:allow] = ["localhost"]
 
 default[:monit][:include] = []
+
+default[:monit][:log_file] = nil
