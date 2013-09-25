@@ -19,5 +19,7 @@ platforms:
 
 suites:
 - name: default
-  run_list: ["recipe[monit]"]
+  run_list:
+    - "recipe[yum::epel]"
+    - "recipe[monit]"
   attributes: {}

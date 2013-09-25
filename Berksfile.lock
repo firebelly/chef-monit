@@ -1,0 +1,11 @@
+{
+  "sha": "5d83f27199d12a655a7c28f669da8d7a5769fec5",
+  "sources": {
+    "monit": {
+      "path": "."
+    },
+    "yum": {
+      "locked_version": "2.2.0"
+    }
+  }
+}

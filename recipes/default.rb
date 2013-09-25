@@ -25,6 +25,10 @@ when 'rhel'
   file '/etc/monit.conf' do
     action :delete
   end
+  directory '/etc/monit.d' do
+    action :delete
+    recursive true
+  end
 end
 
 directory "/etc/monit" do
