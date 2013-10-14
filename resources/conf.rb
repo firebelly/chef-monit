@@ -16,7 +16,7 @@ attribute :start_as, :kind_of => String
 attribute :stop, :kind_of => String
 attribute :stop_as, :kind_of => String
 attribute :template, :kind_of => String, :default => "conf.erb"
-attribute :type, :equal_to => [:file, :process], :default => :process
+attribute :type, :equal_to => [:file, :process, :filesystem], :default => :process
 
 def initialize(*args)
   super
