@@ -6,7 +6,7 @@ action :create do
     Chef::Log.fatal("Type: #{new_resource.type.to_s} requires a pid attribute.")
   end
 
-  withs = case @type
+  withs = case new_resource.type
           when :process
             "with pidfile #{new_resource.pid}"
           when :host
