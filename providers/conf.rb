@@ -6,6 +6,16 @@ action :create do
     Chef::Log.fatal("Type: #{new_resource.type.to_s} requires a pid attribute.")
   end
 
+  withs = case @type
+          when :process
+            "with pidfile #{new_resource.pid}"
+          when :host
+            "with address #{node['ipaddress']}"
+          else
+            "with path #{new_resource.path}"
+          end
+
+
   template "/etc/monit/conf.d/#{new_resource.name}.conf" do
     owner "root"
     group "root"
@@ -16,8 +26,6 @@ action :create do
       :depends => new_resource.depends,
       :group => new_resource.group,
       :name => new_resource.name,
-      :path => new_resource.path,
-      :pid => new_resource.pid,
       :rule => new_resource.rule,
       :start => new_resource.start,
       :start_as => new_resource.start_as,
@@ -25,6 +33,7 @@ action :create do
       :stop_as => new_resource.stop_as,
       :type => new_resource.type,
       :mode => new_resource.mode,
+      :withs => withs
     )
     notifies :restart, "service[monit]", new_resource.reload
   end
