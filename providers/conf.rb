@@ -23,7 +23,8 @@ action :create do
       :start_as => new_resource.start_as,
       :stop => new_resource.stop,
       :stop_as => new_resource.stop_as,
-      :type => new_resource.type
+      :type => new_resource.type,
+      :mode => new_resource.mode,
     )
     notifies :restart, "service[monit]", new_resource.reload
   end

@@ -14,6 +14,9 @@ check <%= @type.to_s %> <%= @name %>
     as <%= @stop_as %>
   <% end %>
   <% end -%>
+  <% if @mode %>
+  mode <%= @mode.to_s %>
+  <% end %>
   <% if @group -%>
   <% Array(@group).each do |g| -%>
   group <%= g %>
