@@ -1,3 +1,6 @@
+use_inline_resource
+
+
 action :create do
   if new_resource.type == :file && !new_resource.path
     Chef::Log.fatal("Type: #{new_resource.type.to_s} requires a path attribute.")
