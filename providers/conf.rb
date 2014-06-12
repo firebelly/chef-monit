@@ -1,6 +1,14 @@
 use_inline_resources
 
 action :create do
+  run_context.include_recipe "monit"
+  # If the monit recipe has already been included outside the LWRP,
+  # it won't be reincluded here, yet use_inline_resources's isolation
+  # will cause service[monit] not to be defined here. So we make sure
+  # that the template below will always see service[monit] as defined
+  # in order to notify it.
+  service "monit"
+
   if new_resource.type == :file && !new_resource.path
     Chef::Log.fatal("Type: #{new_resource.type.to_s} requires a path attribute.")
   end
@@ -37,13 +45,18 @@ action :create do
       :mode => new_resource.mode,
       :withs => withs
     )
+    notifies :restart, "service[monit]", new_resource.reload
   end
 end
 
 action :delete do
+  run_context.include_recipe "monit"
+  service "monit" # See comment above
+
   template "/etc/monit/conf.d/#{new_resource.name}.conf" do
     action :delete
     source new_resource.template
     cookbook new_resource.cookbook
+    notifies :restart, "service[monit]", new_resource.reload
   end
 end
