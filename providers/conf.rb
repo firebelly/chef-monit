@@ -39,6 +39,7 @@ action :create do
       :rule => new_resource.rule,
       :start => new_resource.start,
       :start_as => new_resource.start_as,
+      :start_timeout => new_resource.start_timeout,
       :stop => new_resource.stop,
       :stop_as => new_resource.stop_as,
       :type => new_resource.type,
