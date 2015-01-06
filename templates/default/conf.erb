@@ -9,6 +9,9 @@ check <%= @type.to_s %> <%= @name %>
   <% if @start_as %>
     as <%= @start_as %>
   <% end %>
+  <% if @start_timeout %>
+    with timeout <%= @star_timeout %>
+  <% end %>
   <% end -%>
   <% if @stop %>
   stop program = "<%= @stop %>"
