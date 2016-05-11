@@ -18,7 +18,7 @@ when 'rhel'
   template '/etc/init.d/monit' do
     source 'initd.erb'
     mode '0744'
-    variables :config_file => '/etc/monit/monitrc'
+    variables :config_file => node[:monit][:config_file]
     notifies :restart, "service[monit]", :delayed
   end
 
@@ -37,7 +37,7 @@ directory "/etc/monit" do
   mode '0775'
 end
 
-template "/etc/monit/monitrc" do
+template node[:monit][:config_file] do
   owner "root"
   group "root"
   mode '0700'
