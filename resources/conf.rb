@@ -8,6 +8,7 @@ attribute :group, :kind_of => [String, Array]
 attribute :name, :name_attribute => true, :kind_of => String
 attribute :path, :kind_of => String
 attribute :pid, :kind_of => String
+attribute :regexp, :kind_of => String
 attribute :reload, :default => :delayed
 attribute :alert, :kind_of => String
 attribute :rule, :kind_of => [String, Array] #TODO: regex check for if then
