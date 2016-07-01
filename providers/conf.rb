@@ -12,13 +12,13 @@ action :create do
   if new_resource.type == :file && !new_resource.path
     Chef::Log.fatal("Type: #{new_resource.type.to_s} requires a path attribute.")
   end
-  if new_resource.type == :process && !new_resource.pid
-    Chef::Log.fatal("Type: #{new_resource.type.to_s} requires a pid attribute.")
+  if new_resource.type == :process && !(new_resource.pid || new_resource.regexp)
+    Chef::Log.fatal("Type: #{new_resource.type.to_s} requires a pid attribute or a regexp expression.")
   end
 
   withs = case new_resource.type
           when :process
-            "with pidfile #{new_resource.pid}"
+            new_resource.pid ? "with pidfile #{new_resource.pid}" : "with matching '#{new_resource.regexp}'"
           when :host
             "with address #{node['ipaddress']}"
           else
