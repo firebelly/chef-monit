@@ -3,7 +3,12 @@ set daemon <%= @node[:monit][:poll_period] %>
   with start delay <%= @node[:monit][:poll_start_delay] %>
 <% end %>
 
+<% if @node[:monit][:log_file].nil? %>
 set logfile syslog facility log_daemon
+<% else %>
+set logfile <%= @node[:monit][:log_file] %>
+<% end %>
+
 
 set mailserver <%= @node[:monit][:mailserver][:host] %><%= " port #{@node[:monit][:mailserver][:port]}" if @node[:monit][:mailserver][:port] %>
 <% if @node[:monit][:mailserver][:username] %>
@@ -29,7 +34,9 @@ set mail-format {
   message: <%= @node[:monit][:mail_format][:message] %>
 }
 
+<% if @node[:monit][:email_alerts?] %>
 set alert <%= @node[:monit][:notify_email] %> <%= @node[:monit][:notify_keyword] %> { <%= Array(@node[:monit][:notify_event]).join(', ') %> }
+<% end %>
 
 set httpd port <%= node[:monit][:port] %>
   <%= "use address #{node[:monit][:address]}" if node[:monit][:address] %>
